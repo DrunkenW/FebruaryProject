@@ -13,10 +13,10 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 exit()
             # обработка клавиш передвижения
-            if event.type == pygame.KEYDOWN and event.unicode.lower() in MOVE_BUTTONS:
-                MOVE_BUTTONS_PRESS[event.unicode.lower()] = True
-            if event.type == pygame.KEYUP and event.unicode.lower() in MOVE_BUTTONS:
-                MOVE_BUTTONS_PRESS[event.unicode.lower()] = False
+            if event.type == pygame.KEYDOWN and event.key in MOVE_BUTTONS.keys():
+                MOVE_BUTTONS_PRESS[MOVE_BUTTONS[event.key]] = True
+            if event.type == pygame.KEYUP and event.key in MOVE_BUTTONS.keys():
+                MOVE_BUTTONS_PRESS[MOVE_BUTTONS[event.key]] = False
 
         Player_obj.move()
         player_pos = (Player_obj.x, Player_obj.y)
