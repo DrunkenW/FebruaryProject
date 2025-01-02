@@ -1,5 +1,6 @@
 from settings import *
 from player import *
+from view import *
 
 if __name__ == "__main__":
     pygame.init()
@@ -18,12 +19,13 @@ if __name__ == "__main__":
 
         Player_obj.move()
 
-        # отрисовка игрока
+        # отрисовка
         sc.fill(BLACK)
         pygame.draw.line(sc, (0, 255, 0), Player_obj.pos(),
                          (Player_obj.x + WIDTH * math.cos(Player_obj.view),
-                          Player_obj.y + HEIGHT * math.sin(Player_obj.view)))
-        pygame.draw.circle(sc, (0, 255, 0), Player_obj.pos(), 10)
+                          Player_obj.y + HEIGHT * math.sin(Player_obj.view)), 3) # направление взгляда
+        view(sc, Player_obj.pos(), Player_obj.view) # лучи с обзором
+        pygame.draw.circle(sc, (0, 255, 0), Player_obj.pos(), 10) # игрок
 
         pygame.display.flip()
         clock.tick(FPS)

@@ -1,5 +1,3 @@
-import math
-
 from settings import *
 
 
@@ -15,9 +13,9 @@ class Player:
         pressed_keys = [key for key, keydown_bool in MOVE_BUTTONS_PRESS.items() if keydown_bool]  # зажатые клавиши
         full_speed = len(pressed_keys) != 2  # чтобы игрок наискось не двигался в 2 раза быстрее
         if full_speed:
-            pos_change = speed
+            pos_change = SPEED
         else:
-            pos_change = speed / 1.41
+            pos_change = SPEED / 1.41
         # изменение координат
         for direction in pressed_keys:
             if direction == pygame.K_w:
