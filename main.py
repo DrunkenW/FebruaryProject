@@ -1,7 +1,6 @@
-import pygame.draw
 from map import *
-from player import *
-from view import *
+from player import Player
+from view import view
 
 if __name__ == "__main__":
     pygame.init()
@@ -15,20 +14,28 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 exit()
             # обработка клавиш передвижения
-            if event.type == pygame.KEYDOWN and event.key in MOVE_BUTTONS_PRESS.keys():
-                MOVE_BUTTONS_PRESS[event.key] = True
-            if event.type == pygame.KEYUP and event.key in MOVE_BUTTONS_PRESS.keys():
-                MOVE_BUTTONS_PRESS[event.key] = False
+            if event.type == pygame.KEYDOWN and event.key in BUTTONS_PRESS.keys():
+                BUTTONS_PRESS[event.key] = True
+            if event.type == pygame.KEYUP and event.key in BUTTONS_PRESS.keys():
+                BUTTONS_PRESS[event.key] = False
 
-        Player_obj.move()
+        # передвижение
+        Player_obj.check_press() # проверка зажатия клавиш
+        if len([key for key, keydown_bool in BUTTONS_PRESS.items() if keydown_bool]) > 0:
+            # выполняется только если есть зажатые клавиши
+            Player_obj.move()
 
         # отрисовка
         sc.fill(BLACK)
         pygame.draw.line(sc, (0, 255, 0), Player_obj.pos(),
                          (Player_obj.x + WIDTH * math.cos(Player_obj.view),
                           Player_obj.y + HEIGHT * math.sin(Player_obj.view)), 3)  # направление взгляда
+
         view(sc, Player_obj.pos(), Player_obj.view)  # лучи с обзором
+
         pygame.draw.circle(sc, (0, 255, 0), Player_obj.pos(), 10)  # игрок
-        Map.draw_map(sc)
+
+        Map.draw_map(sc) # карта
+
         pygame.display.flip()
         clock.tick(FPS)
