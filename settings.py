@@ -1,10 +1,11 @@
 import math
 import pygame
 
-WIDTH = 1000
+WIDTH = 1200
 HEIGHT = 800
 
 BLACK = (0, 0, 0)
+DARK_GRAY = (169, 169, 169)
 
 FPS = 165
 
@@ -22,3 +23,5 @@ DRAWING_RANGE = 800 # дальность прорисовки
 DELTA_ANGEL = FOV / RAYS_INT # углы между лучами
 
 TurningSpeed = 0.01
+
+WALL_SIZE = 100
