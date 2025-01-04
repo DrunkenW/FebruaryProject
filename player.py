@@ -6,7 +6,7 @@ class Player:
     def __init__(self):
         self.x, self.y = start_player_pos
         self.player_direction_of_view = player_direction_of_view
-
+        self.drawing_range = DRAWING_RANGE
     def pos(self):
         return self.x, self.y
 
@@ -44,15 +44,19 @@ class Player:
             elif direction == pygame.K_e:
                 self.player_direction_of_view += TurningSpeed
 
-    def vision(self, sc):
+    def vision(self, sc, map):
         # отрисовка лучей обзора
         player_pos = self.pos()
         xo, yo = player_pos
         angle = self.player_direction_of_view - FOV / 2
         for ray in range(RAYS_INT):
-            sina = math.sin(angle)
-            cosa = math.cos(angle)
-            x = xo + DRAWING_RANGE * cosa
-            y = yo + DRAWING_RANGE * sina
-            pygame.draw.line(sc, (255, 255, 255), player_pos, (x, y))
+            sin_a = math.sin(angle)
+            cos_a = math.cos(angle)
+            for depth in range(self.drawing_range):
+                x = xo + depth * cos_a
+                y = yo + depth * sin_a
+                pygame.draw.line(sc, DARK_GRAY, player_pos, (x, y), 2)
+                # проверка на пересечение со стеной
+                if (x // WALL_SIZE * WALL_SIZE, y // WALL_SIZE * WALL_SIZE) in map:
+                    break
             angle += DELTA_ANGEL  # изменение угла

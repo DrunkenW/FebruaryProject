@@ -7,6 +7,7 @@ HEIGHT = 800
 
 BLACK = (0, 0, 0)
 DARK_GRAY = (169, 169, 169)
+WHITE = (255, 255, 255)
 
 FPS = 165
 
@@ -19,7 +20,7 @@ start_player_pos = (WIDTH // 2, HEIGHT // 2)
 player_direction_of_view = 3 * math.pi / 2  # направление взгляда игрока (тригонометрический круг), изначально вверх
 
 FOV = math.pi / 3  # угол обзора
-RAYS_INT = 100
+RAYS_INT = 120
 DRAWING_RANGE = 800  # дальность прорисовки
 DELTA_ANGEL = FOV / RAYS_INT  # углы между лучами
 

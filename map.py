@@ -6,10 +6,10 @@ class WorldMap:
         self.text_map = [
             "WWWWWWWWWWWW",
             "W          W",
+            "W   WWW    W",
+            "W   W      W",
             "W          W",
-            "W          W",
-            "W          W",
-            "W          W",
+            "W      WW  W",
             "W          W",
             "WWWWWWWWWWWW"
         ]
@@ -28,3 +28,6 @@ class WorldMap:
             x, y = wall
             wall_rect = pygame.Rect(x, y, self.WALL_SIZE, self.WALL_SIZE)
             pygame.draw.rect(sc, DARK_GRAY, wall_rect, 1)
+
+    def get_map(self):
+        return self.WORLD_MAP
