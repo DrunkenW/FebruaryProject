@@ -1,6 +1,5 @@
 from map import *
 from player import Player
-from view import view
 
 if __name__ == "__main__":
     pygame.init()
@@ -28,10 +27,9 @@ if __name__ == "__main__":
         # отрисовка
         sc.fill(BLACK)
         pygame.draw.line(sc, (0, 255, 0), Player_obj.pos(),
-                         (Player_obj.x + WIDTH * math.cos(Player_obj.view),
-                          Player_obj.y + HEIGHT * math.sin(Player_obj.view)), 3)  # направление взгляда
-
-        view(sc, Player_obj.pos(), Player_obj.view)  # лучи с обзором
+                         (Player_obj.x + WIDTH * math.cos(Player_obj.player_direction_of_view),
+                          Player_obj.y + HEIGHT * math.sin(Player_obj.player_direction_of_view)), 3)  # направление взгляда
+        Player_obj.vision(sc)  # лучи с обзором
 
         pygame.draw.circle(sc, (0, 255, 0), Player_obj.pos(), 10)  # игрок
 

@@ -5,7 +5,7 @@ from itertools import islice
 class Player:
     def __init__(self):
         self.x, self.y = start_player_pos
-        self.view = player_view
+        self.player_direction_of_view = player_direction_of_view
 
     def pos(self):
         return self.x, self.y
@@ -27,19 +27,32 @@ class Player:
         # изменение координат
         for direction in pressed_keys:
             if direction == pygame.K_w:
-                self.y += pos_change * math.sin(self.view)
-                self.x += pos_change * math.cos(self.view)
+                self.y += pos_change * math.sin(self.player_direction_of_view)
+                self.x += pos_change * math.cos(self.player_direction_of_view)
             elif direction == pygame.K_a:
-                self.x += pos_change * math.sin(self.view)
-                self.y -= pos_change * math.cos(self.view)
+                self.x += pos_change * math.sin(self.player_direction_of_view)
+                self.y -= pos_change * math.cos(self.player_direction_of_view)
             elif direction == pygame.K_s:
-                self.x -= pos_change * math.cos(self.view)
-                self.y -= pos_change * math.sin(self.view)
+                self.x -= pos_change * math.cos(self.player_direction_of_view)
+                self.y -= pos_change * math.sin(self.player_direction_of_view)
             elif direction == pygame.K_d:
-                self.x -= pos_change * math.sin(self.view)
-                self.y += pos_change * math.cos(self.view)
+                self.x -= pos_change * math.sin(self.player_direction_of_view)
+                self.y += pos_change * math.cos(self.player_direction_of_view)
             # временный поворот камеры
             elif direction == pygame.K_q:
-                self.view -= TurningSpeed
+                self.player_direction_of_view -= TurningSpeed
             elif direction == pygame.K_e:
-                self.view += TurningSpeed
+                self.player_direction_of_view += TurningSpeed
+
+    def vision(self, sc):
+        # отрисовка лучей обзора
+        player_pos = self.pos()
+        xo, yo = player_pos
+        angle = self.player_direction_of_view - FOV / 2
+        for ray in range(RAYS_INT):
+            sina = math.sin(angle)
+            cosa = math.cos(angle)
+            x = xo + DRAWING_RANGE * cosa
+            y = yo + DRAWING_RANGE * sina
+            pygame.draw.line(sc, (255, 255, 255), player_pos, (x, y))
+            angle += DELTA_ANGEL  # изменение угла
