@@ -1,3 +1,5 @@
+import pygame.draw
+
 from settings import *
 from itertools import islice
 
@@ -45,30 +47,20 @@ class Player:
                 self.player_direction_of_view += TurningSpeed
 
     def vision(self, sc, map):
-        # отрисовка лучей обзора
-        player_pos = self.pos()
-        xo, yo = player_pos
-        angle = self.player_direction_of_view - FOV / 2
-
-        sin_a = math.sin(angle)
-        cos_a = math.cos(angle)
-
+        cur_angle = self.player_direction_of_view - FOV // 2
+        xo, yo = self.pos()
         for ray in range(RAYS_INT):
-            depth = 0
-            while depth < self.drawing_range:
+            sin_a = math.sin(cur_angle)
+            cos_a = math.cos(cur_angle)
+            for depth in range(DRAWING_RANGE):
                 x = xo + depth * cos_a
                 y = yo + depth * sin_a
-
-                # Проверка на пересечение со стеной
+                # pygame.draw.line(sc, DARK_GRAY, self.pos(), (x, y), 2)
                 if (x // WALL_SIZE * WALL_SIZE, y // WALL_SIZE * WALL_SIZE) in map:
+                    depth *= math.cos(self.player_direction_of_view - cur_angle)
+                    proj_height = min(PROJ_COEF / (depth + 0.0001), HEIGHT)
+                    c = 255 / (1 + depth * depth * 0.0001)
+                    color = (c // 2, c, c // 3)
+                    pygame.draw.rect(sc, color, (ray * SCALE, HEIGHT / 2 - proj_height // 2, SCALE, proj_height))
                     break
-
-                depth += 1
-
-            # Рисуем луч только до точки пересечения со стеной
-            pygame.draw.line(sc, DARK_GRAY, player_pos, (x, y), 2)
-
-            # Изменение угла для следующего луча
-            angle += DELTA_ANGEL
-            sin_a = math.sin(angle)
-            cos_a = math.cos(angle)
+            cur_angle += DELTA_ANGLE
