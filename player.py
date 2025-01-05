@@ -49,14 +49,26 @@ class Player:
         player_pos = self.pos()
         xo, yo = player_pos
         angle = self.player_direction_of_view - FOV / 2
+
+        sin_a = math.sin(angle)
+        cos_a = math.cos(angle)
+
         for ray in range(RAYS_INT):
-            sin_a = math.sin(angle)
-            cos_a = math.cos(angle)
-            for depth in range(self.drawing_range):
+            depth = 0
+            while depth < self.drawing_range:
                 x = xo + depth * cos_a
                 y = yo + depth * sin_a
-                pygame.draw.line(sc, DARK_GRAY, player_pos, (x, y), 2)
-                # проверка на пересечение со стеной
+
+                # Проверка на пересечение со стеной
                 if (x // WALL_SIZE * WALL_SIZE, y // WALL_SIZE * WALL_SIZE) in map:
                     break
-            angle += DELTA_ANGEL  # изменение угла
+
+                depth += 1
+
+            # Рисуем луч только до точки пересечения со стеной
+            pygame.draw.line(sc, DARK_GRAY, player_pos, (x, y), 2)
+
+            # Изменение угла для следующего луча
+            angle += DELTA_ANGEL
+            sin_a = math.sin(angle)
+            cos_a = math.cos(angle)
