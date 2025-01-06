@@ -47,20 +47,33 @@ class Player:
                 self.player_direction_of_view += TurningSpeed
 
     def vision(self, sc, map):
-        cur_angle = self.player_direction_of_view - FOV // 2
-        xo, yo = self.pos()
+        cur_angle = self.player_direction_of_view - FOV / 2  # Начальный угол для первого луча
+        xo, yo = self.pos()  # Позиция игрока
         for ray in range(RAYS_INT):
             sin_a = math.sin(cur_angle)
             cos_a = math.cos(cur_angle)
-            for depth in range(DRAWING_RANGE):
+            depth = 0
+            hit_wall = False
+            while depth < DRAWING_RANGE:
                 x = xo + depth * cos_a
                 y = yo + depth * sin_a
-                # pygame.draw.line(sc, DARK_GRAY, self.pos(), (x, y), 2)
-                if (x // WALL_SIZE * WALL_SIZE, y // WALL_SIZE * WALL_SIZE) in map:
-                    depth *= math.cos(self.player_direction_of_view - cur_angle)
-                    proj_height = min(PROJ_COEF / (depth + 0.0001), HEIGHT)
-                    c = 255 / (1 + depth * depth * 0.0001)
-                    color = (c // 2, c, c // 3)
-                    pygame.draw.rect(sc, color, (ray * SCALE, HEIGHT / 2 - proj_height // 2, SCALE, proj_height))
+                wall_pos = (int(x // WALL_SIZE) * WALL_SIZE, int(y // WALL_SIZE) * WALL_SIZE)
+                if wall_pos in map:
+                    hit_wall = True
                     break
-            cur_angle += DELTA_ANGLE
+                depth += 1
+
+            if hit_wall:
+                # Корректировка глубины с учетом угла между лучом и направлением взгляда
+                corrected_depth = depth * math.cos(self.player_direction_of_view - cur_angle)
+                # Расчет высоты проекции стены
+                proj_height = PROJ_COEF / (corrected_depth + 0.0001)
+                proj_height = min(proj_height, HEIGHT)  # Ограничение высоты
+                # Расчет цвета в зависимости от глубины
+                c = 255 / (1 + corrected_depth * corrected_depth * 0.0001)
+                color = (c // 2, c, c // 3)
+                # Отрисовка вертикальной линии (стены)
+                wall_column = pygame.Rect(ray * SCALE, HEIGHT / 2 - proj_height / 2, SCALE, proj_height)
+                pygame.draw.rect(sc, color, wall_column)
+
+            cur_angle += DELTA_ANGLE  # Переход к следующему лучу
