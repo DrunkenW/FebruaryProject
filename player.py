@@ -1,6 +1,5 @@
 import pygame.draw
 
-from map import world_map
 from settings import *
 from itertools import islice
 
@@ -69,7 +68,7 @@ class Player:
 
 
 
-    def ray_casting(sc, player_pos, player_angle):
+    def ray_casting(sc, player_pos, player_angle, world_map):
         ox, oy = player_pos
         xm, ym = mapping(ox, oy)
         cur_angle = player_angle - FOV / 2
