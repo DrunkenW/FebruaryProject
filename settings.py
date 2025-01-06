@@ -19,8 +19,6 @@ YELLOW = (220, 220, 0)
 
 FPS = 165
 MAX_FPS = 100
-BUTTONS_PRESS = {pygame.K_w: False, pygame.K_a: False, pygame.K_s: False, pygame.K_d: False, pygame.K_q: False,
-                 pygame.K_e: False}  # зажатые клавиши, q и e - поворот камеры
 
 MOVE_SPEED = 1
 
@@ -37,7 +35,7 @@ DIST = RAYS_INT // (2 * math.tan(FOV / 2))
 PROJ_COEF = 3 * DIST * WALL_SIZE
 SCALE = WIDTH // RAYS_INT
 
-TurningSpeed = 0.01  # скорость поворота
+TurningSpeed = 0.015  # скорость поворота
 
 player_angle = 0
 player_speed = 2

@@ -23,25 +23,40 @@ class Player:
     def pos(self):
         return self.x, self.y
 
-    def movement(self):
+    def movement(self, map):
         # Получаем состояние всех клавиш
         keys = pygame.key.get_pressed()
 
+        # Рассчитываем новую позицию игрока
+        new_x, new_y = self.x, self.y
+
         # Движение вперед и назад
         if keys[pygame.K_w]:  # Вперед
-            self.x += math.cos(self.angle) * self.speed
-            self.y += math.sin(self.angle) * self.speed
+            new_x += math.cos(self.angle) * self.speed
+            new_y += math.sin(self.angle) * self.speed
         if keys[pygame.K_s]:  # Назад
-            self.x -= math.cos(self.angle) * self.speed
-            self.y -= math.sin(self.angle) * self.speed
+            new_x -= math.cos(self.angle) * self.speed
+            new_y -= math.sin(self.angle) * self.speed
 
         # Движение влево и вправо (страф)
         if keys[pygame.K_a]:  # Влево
-            self.x += math.cos(self.angle - math.pi / 2) * self.speed
-            self.y += math.sin(self.angle - math.pi / 2) * self.speed
+            new_x += math.cos(self.angle - math.pi / 2) * self.speed
+            new_y += math.sin(self.angle - math.pi / 2) * self.speed
         if keys[pygame.K_d]:  # Вправо
-            self.x += math.cos(self.angle + math.pi / 2) * self.speed
-            self.y += math.sin(self.angle + math.pi / 2) * self.speed
+            new_x += math.cos(self.angle + math.pi / 2) * self.speed
+            new_y += math.sin(self.angle + math.pi / 2) * self.speed
+
+        # Проверяем коллизию с каждой стеной
+        collision = False
+        for wall in map:
+            wall_rect = pygame.Rect((wall[0], wall[1], WALL_SIZE, WALL_SIZE))
+            if wall_rect.collidepoint(new_x, new_y):
+                collision = True
+                break
+
+        # Если коллизии нет, обновляем позицию игрока
+        if not collision:
+            self.x, self.y = new_x, new_y
 
         # Поворот влево и вправо
         if keys[pygame.K_LEFT]:  # Поворот влево

@@ -16,7 +16,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-    Player_obj.movement()
+    Player_obj.movement(world_map)
     sc.fill(BLACK)
 
     drawing.background()
