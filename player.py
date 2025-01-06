@@ -1,79 +1,92 @@
 import pygame.draw
 
+from map import world_map
 from settings import *
 from itertools import islice
 
 
+def mapping(a, b):
+    return (a // 100) * 100, (b // 100) * 100
+
+
+import pygame
+from settings import *
+
 class Player:
     def __init__(self):
-        self.x, self.y = start_player_pos
-        self.player_direction_of_view = player_direction_of_view
-        self.drawing_range = DRAWING_RANGE
+        self.x, self.y = start_player_pos  # Начальная позиция игрока
+        self.angle = player_angle  # Угол направления взгляда
+        self.speed = player_speed  # Скорость движения игрока
+        self.rotation_speed = TurningSpeed  # Скорость поворота
+
+    @property
     def pos(self):
         return self.x, self.y
 
-    def check_press(self):
-        self.MOVE_BUTTONS_PRESS = dict(islice(BUTTONS_PRESS.items(), 4))
-        self.TURN_BUTTONS_PRESS = dict(islice(BUTTONS_PRESS.items(), 4, 6))
+    def movement(self):
+        # Получаем состояние всех клавиш
+        keys = pygame.key.get_pressed()
 
-    def move(self):
-        pressed_keys = [key for key, keydown_bool in self.MOVE_BUTTONS_PRESS.items() if
-                        keydown_bool]  # зажатые клавиши движения
-        full_speed = len(pressed_keys) != 2  # чтобы игрок наискось не двигался в 2 раза быстрее
-        if full_speed:
-            pos_change = MOVE_SPEED
-        else:
-            pos_change = MOVE_SPEED / 1.41
-        [pressed_keys.append(key) for key, keydown_bool in self.TURN_BUTTONS_PRESS.items() if
-         keydown_bool]  # добавление зажатых клавиш поворота
-        # изменение координат
-        for direction in pressed_keys:
-            if direction == pygame.K_w:
-                self.y += pos_change * math.sin(self.player_direction_of_view)
-                self.x += pos_change * math.cos(self.player_direction_of_view)
-            elif direction == pygame.K_a:
-                self.x += pos_change * math.sin(self.player_direction_of_view)
-                self.y -= pos_change * math.cos(self.player_direction_of_view)
-            elif direction == pygame.K_s:
-                self.x -= pos_change * math.cos(self.player_direction_of_view)
-                self.y -= pos_change * math.sin(self.player_direction_of_view)
-            elif direction == pygame.K_d:
-                self.x -= pos_change * math.sin(self.player_direction_of_view)
-                self.y += pos_change * math.cos(self.player_direction_of_view)
-            # временный поворот камеры
-            elif direction == pygame.K_q:
-                self.player_direction_of_view -= TurningSpeed
-            elif direction == pygame.K_e:
-                self.player_direction_of_view += TurningSpeed
+        # Движение вперед и назад
+        if keys[pygame.K_w]:  # Вперед
+            self.x += math.cos(self.angle) * self.speed
+            self.y += math.sin(self.angle) * self.speed
+        if keys[pygame.K_s]:  # Назад
+            self.x -= math.cos(self.angle) * self.speed
+            self.y -= math.sin(self.angle) * self.speed
 
-    def vision(self, sc, map):
-        cur_angle = self.player_direction_of_view - FOV / 2  # Начальный угол для первого луча
-        xo, yo = self.pos()  # Позиция игрока
+        # Движение влево и вправо (страф)
+        if keys[pygame.K_a]:  # Влево
+            self.x += math.cos(self.angle - math.pi / 2) * self.speed
+            self.y += math.sin(self.angle - math.pi / 2) * self.speed
+        if keys[pygame.K_d]:  # Вправо
+            self.x += math.cos(self.angle + math.pi / 2) * self.speed
+            self.y += math.sin(self.angle + math.pi / 2) * self.speed
+
+        # Поворот влево и вправо
+        if keys[pygame.K_LEFT]:  # Поворот влево
+            self.angle -= self.rotation_speed
+        if keys[pygame.K_RIGHT]:  # Поворот вправо
+            self.angle += self.rotation_speed
+
+        # Нормализация угла (чтобы он оставался в пределах 0-2π)
+        self.angle %= 2 * math.pi
+
+
+
+    def ray_casting(sc, player_pos, player_angle):
+        ox, oy = player_pos
+        xm, ym = mapping(ox, oy)
+        cur_angle = player_angle - FOV / 2
         for ray in range(RAYS_INT):
             sin_a = math.sin(cur_angle)
             cos_a = math.cos(cur_angle)
-            depth = 0
-            hit_wall = False
-            while depth < DRAWING_RANGE:
-                x = xo + depth * cos_a
-                y = yo + depth * sin_a
-                wall_pos = (int(x // WALL_SIZE) * WALL_SIZE, int(y // WALL_SIZE) * WALL_SIZE)
-                if wall_pos in map:
-                    hit_wall = True
+            sin_a = sin_a if sin_a else 0.000001
+            cos_a = cos_a if cos_a else 0.000001
+
+            # по Y оси
+            x, dx = (xm + 100, 1) if cos_a >= 0 else (xm, -1)
+            for i in range(0, WIDTH, 100):
+                depth_v = (x - ox) / cos_a
+                y = oy + depth_v * sin_a
+                if mapping(x + dx, y) in world_map:
                     break
-                depth += 1
+                x += dx * 100
 
-            if hit_wall:
-                # Корректировка глубины с учетом угла между лучом и направлением взгляда
-                corrected_depth = depth * math.cos(self.player_direction_of_view - cur_angle)
-                # Расчет высоты проекции стены
-                proj_height = PROJ_COEF / (corrected_depth + 0.0001)
-                proj_height = min(proj_height, HEIGHT)  # Ограничение высоты
-                # Расчет цвета в зависимости от глубины
-                c = 255 / (1 + corrected_depth * corrected_depth * 0.0001)
-                color = (c // 2, c, c // 3)
-                # Отрисовка вертикальной линии (стены)
-                wall_column = pygame.Rect(ray * SCALE, HEIGHT / 2 - proj_height / 2, SCALE, proj_height)
-                pygame.draw.rect(sc, color, wall_column)
+            # по Х оси
+            y, dy = (ym + 100, 1) if sin_a >= 0 else (ym, -1)
+            for i in range(0, HEIGHT, 100):
+                depth_h = (y - oy) / sin_a
+                x = ox + depth_h * cos_a
+                if mapping(x, y + dy) in world_map:
+                    break
+                y += dy * 100
 
-            cur_angle += DELTA_ANGLE  # Переход к следующему лучу
+            # проекция
+            depth = depth_v if depth_v < depth_h else depth_h
+            depth *= math.cos(player_angle - cur_angle)
+            proj_height = PROJ_COEF / depth
+            c = 255 / (1 + depth * depth * 0.00002)
+            color = (c, c // 2, c // 3)
+            pygame.draw.rect(sc, color, (ray * SCALE, HEIGHT / 2 - proj_height // 2, SCALE, proj_height))
+            cur_angle += DELTA_ANGLE

@@ -1,40 +1,28 @@
-from map import *
+import pygame
+from settings import *
 from player import Player
+import math
+from map import world_map
+from draw import Drawing
 
-if __name__ == "__main__":
-    pygame.init()
-    clock = pygame.time.Clock()
-    sc = pygame.display.set_mode((WIDTH, HEIGHT))
-    Player_obj = Player()
-    Map = WorldMap()
-    Map.create_map() # создание карты
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-            # обработка клавиш передвижения
-            if event.type == pygame.KEYDOWN and event.key in BUTTONS_PRESS.keys():
-                BUTTONS_PRESS[event.key] = True
-            if event.type == pygame.KEYUP and event.key in BUTTONS_PRESS.keys():
-                BUTTONS_PRESS[event.key] = False
+pygame.init()
+sc = pygame.display.set_mode((WIDTH, HEIGHT))
+sc_map = pygame.Surface((WIDTH // 5, HEIGHT // 5))
+clock = pygame.time.Clock()
+Player_obj = Player()
+drawing = Drawing(sc, sc_map)
 
-        # передвижение
-        Player_obj.check_press() # проверка зажатия клавиш
-        if len([key for key, keydown_bool in BUTTONS_PRESS.items() if keydown_bool]) > 0:
-            # выполняется только если есть зажатые клавиши
-            Player_obj.move()
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
+    Player_obj.movement()
+    sc.fill(BLACK)
 
-        # отрисовка
-        sc.fill(BLACK)
-        """
-        pygame.draw.line(sc, (0, 255, 0), Player_obj.pos(),
-                         (Player_obj.x + WIDTH * math.cos(Player_obj.player_direction_of_view),
-                          Player_obj.y + HEIGHT * math.sin(Player_obj.player_direction_of_view)), 3)  # направление взгляда
+    drawing.background()
+    drawing.world(Player_obj.pos, Player_obj.angle)
+    drawing.fps(clock)
+    drawing.mini_map(Player_obj)
 
-        pygame.draw.circle(sc, (0, 255, 0), Player_obj.pos(), 10)  # игрок
-
-        Map.draw_map(sc) # карта
-        """
-        Player_obj.vision(sc, Map.get_map())  # лучи с обзором
-        pygame.display.flip()
-        clock.tick(FPS)
+    pygame.display.flip()
+    clock.tick(MAX_FPS)
