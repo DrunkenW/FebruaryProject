@@ -39,3 +39,9 @@ TurningSpeed = 0.015  # скорость поворота
 
 player_angle = 0
 player_speed = 2
+
+
+# texture настройки
+TEXTURE_WIDTH = 1200
+TEXTURE_HEIGHT = 1200
+TEXTURE_SCALE = TEXTURE_WIDTH // WALL_SIZE
