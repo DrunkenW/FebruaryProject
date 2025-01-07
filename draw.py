@@ -1,7 +1,6 @@
 import pygame
 from settings import *
-from player import Player
-from player import Player
+
 class Drawing:
     def __init__(self, sc, sc_map):
         self.sc = sc
@@ -12,8 +11,8 @@ class Drawing:
         pygame.draw.rect(self.sc, BLACK, (0, 0, WIDTH, WIDTH // 2))
         pygame.draw.rect(self.sc, DARKGRAY, (0, HEIGHT // 2, WIDTH, HEIGHT // 2))
 
-    def world(self, player_pos, player_angle, world_map):
-        Player.ray_casting(self.sc, player_pos, player_angle, world_map)
+    def world(self, player, world_map):
+        player.ray_casting(self.sc, world_map)  # Вызов метода ray_casting через объект Player
 
     def fps(self, clock):
         display_fps = str(int(clock.get_fps()))

@@ -1,14 +1,5 @@
-import pygame.draw
-
-from settings import *
-from itertools import islice
-
-
-def mapping(a, b):
-    return (a // 100) * 100, (b // 100) * 100
-
-
 import pygame
+import math
 from settings import *
 
 class Player:
@@ -23,10 +14,7 @@ class Player:
         return self.x, self.y
 
     def movement(self, map):
-        # Получаем состояние всех клавиш
         keys = pygame.key.get_pressed()
-
-        # Рассчитываем новую позицию игрока
         new_x, new_y = self.x, self.y
 
         # Движение вперед и назад
@@ -45,7 +33,7 @@ class Player:
             new_x += math.cos(self.angle + math.pi / 2) * self.speed
             new_y += math.sin(self.angle + math.pi / 2) * self.speed
 
-        # Проверяем коллизию с каждой стеной
+        # Проверка коллизий
         collision = False
         for wall in map:
             wall_rect = pygame.Rect((wall[0], wall[1], WALL_SIZE, WALL_SIZE))
@@ -53,25 +41,23 @@ class Player:
                 collision = True
                 break
 
-        # Если коллизии нет, обновляем позицию игрока
         if not collision:
             self.x, self.y = new_x, new_y
 
-        # Поворот влево и вправо
+        # Поворот
         if keys[pygame.K_LEFT]:  # Поворот влево
             self.angle -= self.rotation_speed
         if keys[pygame.K_RIGHT]:  # Поворот вправо
             self.angle += self.rotation_speed
 
-        # Нормализация угла (чтобы он оставался в пределах 0-2π)
+        # Нормализация угла
         self.angle %= 2 * math.pi
 
-
-
-    def ray_casting(sc, player_pos, player_angle, world_map):
-        ox, oy = player_pos
+    def ray_casting(self, sc, world_map):
+        ox, oy = self.pos
+        mapping = lambda a, b: ((a // 100) * 100, (b // 100) * 100)
         xm, ym = mapping(ox, oy)
-        cur_angle = player_angle - FOV / 2
+        cur_angle = self.angle - FOV / 2
         SCALE = WIDTH / RAYS_INT
         for ray in range(RAYS_INT):
             sin_a = math.sin(cur_angle)
@@ -79,7 +65,7 @@ class Player:
             sin_a = sin_a if sin_a else 0.000001
             cos_a = cos_a if cos_a else 0.000001
 
-            # по Y оси
+            # Поиск пересечения с вертикальными линиями
             x, dx = (xm + 100, 1) if cos_a >= 0 else (xm, -1)
             for i in range(0, WIDTH, 100):
                 depth_v = (x - ox) / cos_a
@@ -88,7 +74,7 @@ class Player:
                     break
                 x += dx * 100
 
-            # по Х оси
+            # Поиск пересечения с горизонтальными линиями
             y, dy = (ym + 100, 1) if sin_a >= 0 else (ym, -1)
             for i in range(0, HEIGHT, 100):
                 depth_h = (y - oy) / sin_a
@@ -97,15 +83,17 @@ class Player:
                     break
                 y += dy * 100
 
-            # проекция
+            # Выбор минимальной глубины
             depth = depth_v if depth_v < depth_h else depth_h
-            depth *= math.cos(player_angle - cur_angle)
+            depth *= math.cos(self.angle - cur_angle)  # Коррекция глубины
+
+            # Расчёт высоты проекции и цвета
             proj_height = PROJ_COEF / depth
             c = 255 / (1 + depth * depth * 0.00002)
             color = (c, c // 2, c // 3)
-            # Рассчитываем начальную позицию x с использованием плавающей точки
-            x_start = ray * SCALE
-            # Отрисовываем прямоугольник с целочисленными позициями пикселей
-            pygame.draw.rect(sc, color,
-                             (int(x_start), int(HEIGHT / 2 - proj_height / 2), int(SCALE + 1), int(proj_height)))
+
+            # Отрисовка стен
+            pygame.draw.rect(sc, color, (int(ray * SCALE), int(HEIGHT / 2 - proj_height / 2), int(SCALE + 2), int(proj_height)))
+
+            # Переход к следующему лучу
             cur_angle += DELTA_ANGLE
