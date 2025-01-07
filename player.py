@@ -72,6 +72,7 @@ class Player:
         ox, oy = player_pos
         xm, ym = mapping(ox, oy)
         cur_angle = player_angle - FOV / 2
+        SCALE = WIDTH / RAYS_INT
         for ray in range(RAYS_INT):
             sin_a = math.sin(cur_angle)
             cos_a = math.cos(cur_angle)
@@ -102,5 +103,9 @@ class Player:
             proj_height = PROJ_COEF / depth
             c = 255 / (1 + depth * depth * 0.00002)
             color = (c, c // 2, c // 3)
-            pygame.draw.rect(sc, color, (ray * SCALE, HEIGHT / 2 - proj_height // 2, SCALE, proj_height))
+            # Рассчитываем начальную позицию x с использованием плавающей точки
+            x_start = ray * SCALE
+            # Отрисовываем прямоугольник с целочисленными позициями пикселей
+            pygame.draw.rect(sc, color,
+                             (int(x_start), int(HEIGHT / 2 - proj_height / 2), int(SCALE + 1), int(proj_height)))
             cur_angle += DELTA_ANGLE

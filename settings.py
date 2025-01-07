@@ -29,12 +29,11 @@ player_direction_of_view = 3 * math.pi / 2  # направление взгля�
 WALL_SIZE = 100
 
 FOV = math.pi / 3  # угол обзора
-RAYS_INT = 120
+RAYS_INT = 300
 DRAWING_RANGE = 800  # дальность прорисовки
 DELTA_ANGLE = FOV / RAYS_INT  # углы между лучами
 DIST = RAYS_INT // (2 * math.tan(FOV / 2))
 PROJ_COEF = 3 * DIST * WALL_SIZE
-SCALE = WIDTH // RAYS_INT
 
 TurningSpeed = 0.015  # скорость поворота
 
