@@ -1,29 +1,29 @@
 import pygame
 from settings import *
 from player import Player
-from map import Map
+import math
+from map import world_map
 from draw import Drawing
 
 pygame.init()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 sc_map = pygame.Surface((WIDTH // 5, HEIGHT // 5))
 clock = pygame.time.Clock()
-player = Player()  # Создаём объект Player
+player = Player()
 drawing = Drawing(sc, sc_map)
-world_map = Map()
+
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
-
-    player.movement(world_map.get_map())  # Обновляем движение игрока
+    player.movement()
     sc.fill(BLACK)
 
-    drawing.background()
-    drawing.world(player, world_map.get_map())  # Передаём объект Player в метод world
+    drawing.background(player.angle)
+    drawing.world(player.pos, player.angle)
     drawing.fps(clock)
-    drawing.mini_map(player, world_map.get_minimap())
+    drawing.mini_map(player)
 
     pygame.display.flip()
-    clock.tick(MAX_FPS)
+    clock.tick()

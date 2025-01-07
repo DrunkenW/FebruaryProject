@@ -34,7 +34,7 @@ DRAWING_RANGE = 800  # дальность прорисовки
 DELTA_ANGLE = FOV / RAYS_INT  # углы между лучами
 DIST = RAYS_INT // (2 * math.tan(FOV / 2))
 PROJ_COEF = 3 * DIST * WALL_SIZE
-
+MAP_POS = (0, HEIGHT - HEIGHT // 5)
 TurningSpeed = 0.015  # скорость поворота
 
 player_angle = 0
