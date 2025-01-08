@@ -12,7 +12,6 @@ def ray_casting(sc, player_pos, player_angle, textures):
 
     rays = []
 
-
     for ray in range(RAYS_INT):
         sin_a = math.sin(cur_angle)
         cos_a = math.cos(cur_angle)
@@ -20,6 +19,7 @@ def ray_casting(sc, player_pos, player_angle, textures):
         # Вертикальное пересечение луча
         x, dx = (xm + WALL_SIZE, 1) if cos_a >= 0 else (xm, -1)  # Начальная позиция и направление
         depth_v = float('inf')  # начальная глубина
+        texture_v = '1'  # Default texture for vertical intersection
         for i in range(0, WIDTH * 2, WALL_SIZE):  # Перебор вертикальных линий
             depth_v_temp = (x - ox) / cos_a  # Временная глубина до пересечения
             yv = oy + depth_v_temp * sin_a  # Координата y пересечения
@@ -33,6 +33,7 @@ def ray_casting(sc, player_pos, player_angle, textures):
         # Горизонтальное пересечение луча
         y, dy = (ym + WALL_SIZE, 1) if sin_a >= 0 else (ym, -1)  # Начальная позиция и направление
         depth_h = float('inf')
+        texture_h = '1'  # Default texture for horizontal intersection
         for i in range(0, HEIGHT * 2, WALL_SIZE):
             depth_h_temp = (y - oy) / sin_a  # Временная глубина до пересечения
             xh = ox + depth_h_temp * cos_a  # Координата x пересечения
