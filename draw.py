@@ -2,29 +2,31 @@ import pygame
 import math
 from settings import *
 from ray_casting import ray_casting
-from map import mini_map
+
 
 class Drawing:
-    def __init__(self, sc, sc_map):
+    def __init__(self, sc):
         self.sc = sc
-        self.sc_map = sc_map
         self.font = pygame.font.SysFont('Arial', 36, bold=True)
         self.textures = {
             '1': pygame.image.load('image/wall1.png').convert(),
             '2': pygame.image.load('image/wall2.png').convert(),
             'S': pygame.image.load('image/sky.png').convert()
         }
-        # Масштабируем текстуру неба под размер экрана
         self.textures['S'] = pygame.transform.scale(self.textures['S'], (WIDTH, HEIGHT // 2))
+        self.hud_image = pygame.image.load('image/hotbar.png').convert_alpha()
+
+        # Scale the HUD image to full screen width
+        original_width, original_height = self.hud_image.get_size()
+        new_width = WIDTH
+        new_height = int((original_height / original_width) * new_width)
+        self.hud_image = pygame.transform.scale(self.hud_image, (new_width, new_height))
 
     def background(self, angle):
-        # Рассчитываем смещение неба на основе угла обзора игрока
         sky_offset = int(-5 * math.degrees(angle)) % WIDTH
-        # Отрисовываем текстуру неба с учетом смещения
         self.sc.blit(self.textures['S'], (sky_offset - WIDTH, 0))
         self.sc.blit(self.textures['S'], (sky_offset, 0))
         self.sc.blit(self.textures['S'], (sky_offset + WIDTH, 0))
-        # Отрисовываем нижнюю часть экрана (пол)
         pygame.draw.rect(self.sc, DARKGRAY, (0, HEIGHT // 2, WIDTH, HEIGHT // 2))
 
     def world(self, player_pos, player_angle):
@@ -35,12 +37,7 @@ class Drawing:
         render = self.font.render(display_fps, 0, RED)
         self.sc.blit(render, (WIDTH - 65, 5))
 
-    def mini_map(self, player):
-        self.sc_map.fill(BLACK)
-        map_x, map_y = player.x // 5, player.y // 5
-        pygame.draw.line(self.sc_map, YELLOW, (map_x, map_y), (map_x + 12 * math.cos(player.angle),
-                                                     map_y + 12 * math.sin(player.angle)), 2)
-        pygame.draw.circle(self.sc_map, RED, (int(map_x), int(map_y)), 5)
-        for x, y in mini_map:
-            pygame.draw.rect(self.sc_map, RED, (x, y, WALL_SIZE // 5, WALL_SIZE // 5))
-        self.sc.blit(self.sc_map, MAP_POS)
+    def draw_hud(self):
+        hud_rect = self.hud_image.get_rect()
+        hud_rect.bottomleft = (0, HEIGHT)
+        self.sc.blit(self.hud_image, hud_rect)

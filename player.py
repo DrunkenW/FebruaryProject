@@ -1,6 +1,7 @@
 import pygame
 import math
 from settings import *
+from map import walls
 
 class Player:
     def __init__(self):
@@ -13,6 +14,9 @@ class Player:
     def pos(self):
         return self.x, self.y
 
+    def movement(self):
+        sin_a = math.sin(self.angle)
+        cos_a = math.cos(self.angle)
         keys = pygame.key.get_pressed()
         new_x, new_y = self.x, self.y
 
@@ -34,9 +38,8 @@ class Player:
 
         # Проверка коллизий
         collision = False
-        for wall in walls:  # Используем walls вместо map
-            wall_rect = pygame.Rect((wall[0], wall[1], WALL_SIZE, WALL_SIZE))
-            if wall_rect.collidepoint(new_x, new_y):
+        for wall in walls:
+            if wall.collidepoint(new_x, new_y):
                 collision = True
                 break
 
@@ -51,24 +54,3 @@ class Player:
 
         # Нормализация угла
         self.angle %= 2 * math.pi
-
-    def movement(self):
-        sin_a = math.sin(self.angle)
-        cos_a = math.cos(self.angle)
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
-            self.x += player_speed * cos_a
-            self.y += player_speed * sin_a
-        if keys[pygame.K_s]:
-            self.x += -player_speed * cos_a
-            self.y += -player_speed * sin_a
-        if keys[pygame.K_a]:
-            self.x += player_speed * sin_a
-            self.y += -player_speed * cos_a
-        if keys[pygame.K_d]:
-            self.x += -player_speed * sin_a
-            self.y += player_speed * cos_a
-        if keys[pygame.K_LEFT]:
-            self.angle -= 0.02
-        if keys[pygame.K_RIGHT]:
-            self.angle += 0.02

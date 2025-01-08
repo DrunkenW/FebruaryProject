@@ -17,14 +17,14 @@ PURPLE = (120, 0, 120)
 SKYBLUE = (0, 186, 255)
 YELLOW = (220, 220, 0)
 
-
 FPS = 165
 MAX_FPS = 100
 
 MOVE_SPEED = 1
 
 start_player_pos = (WIDTH // 3, HEIGHT // 3)
-player_direction_of_view = 3 * math.pi / 2  # направление взгляда игрока (тригонометрический круг), изначально вверх
+player_angle = 0
+player_speed = 2
 
 WALL_SIZE = 100
 
@@ -34,12 +34,8 @@ DRAWING_RANGE = 800  # дальность прорисовки
 DELTA_ANGLE = FOV / RAYS_INT  # углы между лучами
 DIST = RAYS_INT // (2 * math.tan(FOV / 2))
 PROJ_COEF = 3 * DIST * WALL_SIZE
-MAP_POS = (0, HEIGHT - HEIGHT // 5)
+
 TurningSpeed = 0.015  # скорость поворота
-
-player_angle = 0
-player_speed = 2
-
 
 # texture настройки
 TEXTURE_WIDTH = 1200

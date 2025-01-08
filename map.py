@@ -12,12 +12,14 @@ text_map = [
 ]
 
 world_map = {}
-mini_map = set()
+walls = []
+
 for j, row in enumerate(text_map):
     for i, char in enumerate(row):
         if char != '.':
-            mini_map.add((i * WALL_SIZE / 5, j * WALL_SIZE / 5))
+            wall_pos = (i * WALL_SIZE, j * WALL_SIZE)
+            walls.append(pygame.Rect(wall_pos[0], wall_pos[1], WALL_SIZE, WALL_SIZE))
             if char == '1':
-                world_map[(i * WALL_SIZE, j * WALL_SIZE)] = '1'
+                world_map[wall_pos] = '1'
             elif char == '2':
-                world_map[(i * WALL_SIZE, j * WALL_SIZE)] = '2'
+                world_map[wall_pos] = '2'
