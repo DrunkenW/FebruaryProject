@@ -41,3 +41,6 @@ TurningSpeed = 0.015  # скорость поворота
 TEXTURE_WIDTH = 1200
 TEXTURE_HEIGHT = 1200
 TEXTURE_SCALE = TEXTURE_WIDTH // WALL_SIZE
+
+# sprites
+SPRITE_SIZE = 100
