@@ -44,3 +44,11 @@ TEXTURE_SCALE = TEXTURE_WIDTH // WALL_SIZE
 
 # sprites
 SPRITE_SIZE = 100
+
+#оружие параметры спрайтов
+
+WEAPON_WIDTH = 400
+WEAPON_HEIGHT = 300
+
+
+MOUSE_SENSITIVITY = 0.001  # Чувствительность мыши (можно регулировать)

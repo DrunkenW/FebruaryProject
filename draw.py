@@ -15,12 +15,18 @@ class Drawing:
         }
         self.textures['S'] = pygame.transform.scale(self.textures['S'], (WIDTH, HEIGHT // 2))
         self.hud_image = pygame.image.load('image/hotbar.png').convert_alpha()
-
-        # Scale the HUD image to full screen width
         original_width, original_height = self.hud_image.get_size()
         new_width = WIDTH
-        new_height = int((original_height / original_width) * new_width)
-        self.hud_image = pygame.transform.scale(self.hud_image, (new_width, new_height))
+        self.new_height = int((original_height / original_width) * new_width)
+        self.hud_image = pygame.transform.scale(self.hud_image, (new_width, self.new_height))
+        self.health_bar_width = 210
+        self.health_bar_height = 30
+        self.health_bar_x = int(WIDTH * 0.2)
+
+    def draw_weapon(self, weapon_image):
+        weapon_x = WIDTH // 2 - weapon_image.get_width() // 2
+        weapon_y = HEIGHT - weapon_image.get_height() - 190
+        self.sc.blit(weapon_image, (weapon_x, weapon_y))
 
     def background(self, angle):
         sky_offset = int(-5 * math.degrees(angle)) % WIDTH
@@ -37,7 +43,14 @@ class Drawing:
         render = self.font.render(display_fps, 0, RED)
         self.sc.blit(render, (WIDTH - 65, 5))
 
-    def draw_hud(self):
-        hud_rect = self.hud_image.get_rect()
-        hud_rect.bottomleft = (0, HEIGHT)
-        self.sc.blit(self.hud_image, hud_rect)
+    def draw_hud(self, player_health):
+        hud_y = HEIGHT - self.new_height
+        self.sc.blit(self.hud_image, (0, hud_y))
+        health_bar_y = hud_y + (self.new_height - self.health_bar_height) // 2
+        pygame.draw.rect(self.sc, BLACK,
+                         (self.health_bar_x, health_bar_y, self.health_bar_width, self.health_bar_height))
+        health_width = int((player_health / 100) * self.health_bar_width)
+        if health_width < 0:
+            health_width = 0
+        pygame.draw.rect(self.sc, GREEN,
+                         (self.health_bar_x + 2, health_bar_y + 2, health_width, self.health_bar_height - 4))

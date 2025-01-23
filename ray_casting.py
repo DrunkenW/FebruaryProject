@@ -53,10 +53,10 @@ def ray_casting(sc, player_pos, player_angle, textures):
             depth, offset, texture = depth_h, xh, texture_h
 
         offset = int(offset) % WALL_SIZE
-        depth *= math.cos(player_angle - cur_angle)  # Коррекция перспективы
+        depth *= math.cos(player_angle - cur_angle)
         proj_height = min(int(PROJ_COEF / depth), 2 * HEIGHT)
 
-        rays.append((depth, offset, texture, proj_height))  # Сохраняем информацию о луче
+        rays.append((depth, offset, texture, proj_height))
         cur_angle += DELTA_ANGLE
 
     # Отрисовка стен
