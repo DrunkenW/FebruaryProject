@@ -50,5 +50,11 @@ SPRITE_SIZE = 100
 WEAPON_WIDTH = 400
 WEAPON_HEIGHT = 300
 
+DOUBLE_PI = math.pi * 2
+CENTER_RAY = RAYS_INT // 2 - 1
+FAKE_RAYS = 100
+HALF_FOV = FOV / 2
+SCALE = WIDTH // RAYS_INT
+
 
 MOUSE_SENSITIVITY = 0.001  # Чувствительность мыши (можно регулировать)

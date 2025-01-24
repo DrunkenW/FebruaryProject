@@ -4,11 +4,14 @@ from player import Player
 import math
 from draw import Drawing
 from map import walls
+from ray_casting import ray_casting
+from sprites import Sprites
 pygame.init()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 player = Player(walls)  # Pass the walls list to the Player constructor
 drawing = Drawing(sc)
+sprites = Sprites()
 pygame.mouse.set_visible(False)
 pygame.event.set_grab(True)
 
@@ -33,7 +36,8 @@ while True:
     sc.fill(BLACK)
 
     drawing.background(player.angle)
-    drawing.world(player.pos, player.angle)
+    walls = ray_casting(player, drawing.textures)
+    drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
     drawing.fps(clock)
     drawing.draw_hud(player.health)
     for weapon in player.inventory.values():
