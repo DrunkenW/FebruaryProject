@@ -46,14 +46,20 @@ class Drawing:
         render = self.font.render(display_fps, 0, RED)
         self.sc.blit(render, (WIDTH - 65, 5))
 
-    def draw_hud(self, player_health):
+    def draw_hud(self, player):
         hud_y = HEIGHT - self.new_height
         self.sc.blit(self.hud_image, (0, hud_y))
         health_bar_y = hud_y + (self.new_height - self.health_bar_height) // 2
         pygame.draw.rect(self.sc, BLACK,
                          (self.health_bar_x, health_bar_y, self.health_bar_width, self.health_bar_height))
-        health_width = int((player_health / 100) * self.health_bar_width)
+        health_width = int((player.health / 100) * self.health_bar_width)
         if health_width < 0:
             health_width = 0
         pygame.draw.rect(self.sc, GREEN,
                          (self.health_bar_x + 2, health_bar_y + 2, health_width, self.health_bar_height - 4))
+        weapon = player.inventory[player.current_weapon]
+        ammo_text = f"{weapon.ammo}/{weapon.max_ammo}"
+        render_ammo = self.font.render(ammo_text, 0, WHITE)
+        ammo_x = WIDTH - 250  # Правая часть экрана
+        ammo_y = HEIGHT - self.new_height + 20  # Выравнивание по HUD
+        self.sc.blit(render_ammo, (ammo_x, ammo_y))

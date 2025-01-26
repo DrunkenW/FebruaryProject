@@ -18,6 +18,7 @@ class Player:
                 fire_animation=[pygame.image.load(f'image/shotgun/fire_{i}.png').convert_alpha() for i in range(3)],
                 reload_animation=[pygame.image.load(f'image/shotgun/reload_{i}.png').convert_alpha() for i in range(3)],
                 idle_animation=[pygame.image.load('image/shotgun/0.png').convert_alpha()],
+                max_ammo=6,
                 fire_sound=pygame.mixer.Sound(SOUNDS['shotgun'])  # Добавлен звук
             )
         }

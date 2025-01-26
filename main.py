@@ -42,7 +42,7 @@ while True:
     walls = ray_casting(player, drawing.textures)
     drawing.world(walls + [obj.object_locate(player, walls) for obj in sprites.list_of_objects])
     drawing.fps(clock)
-    drawing.draw_hud(player.health)
+    drawing.draw_hud(player)
     for weapon in player.inventory.values():
         weapon.update_animation()
 

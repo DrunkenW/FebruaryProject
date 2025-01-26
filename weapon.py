@@ -2,7 +2,8 @@ import pygame
 from settings import *
 
 class Weapon:
-    def __init__(self, name, damage, cooldown, fire_animation, reload_animation, idle_animation, fire_sound):
+    def __init__(self, name, damage, cooldown, fire_animation, reload_animation, idle_animation,
+                 fire_sound, max_ammo=6):
         self.fire_sound = fire_sound
         self.name = name
         self.damage = damage
@@ -16,13 +17,17 @@ class Weapon:
         self.is_reloading = False
         self.animation_speed = 100
         self.last_frame_time = 0
+        self.max_ammo = max_ammo
+        self.ammo = max_ammo
+
 
     def can_shoot(self):
         current_time = pygame.time.get_ticks()
         return current_time - self.last_shot >= self.cooldown
 
     def shoot(self):
-        if self.can_shoot():
+        if self.can_shoot() and self.ammo > 0:
+            self.ammo -= 1  # Уменьшаем патроны при выстреле
             self.fire_sound.play()
             self.last_shot = pygame.time.get_ticks()
             self.is_firing = True
