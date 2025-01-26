@@ -29,7 +29,7 @@ player_speed = 2
 WALL_SIZE = 100
 
 FOV = math.pi / 3  # угол обзора
-RAYS_INT = 300
+RAYS_INT = 320
 DRAWING_RANGE = 800  # дальность прорисовки
 DELTA_ANGLE = FOV / RAYS_INT  # углы между лучами
 DIST = RAYS_INT // (2 * math.tan(FOV / 2))
@@ -58,3 +58,8 @@ SCALE = WIDTH // RAYS_INT
 
 
 MOUSE_SENSITIVITY = 0.001  # Чувствительность мыши (можно регулировать)
+
+SOUNDS = {
+    'shotgun': 'sounds/dsdshtgn.mp3',
+    'background': 'sounds/background.mp3'
+}

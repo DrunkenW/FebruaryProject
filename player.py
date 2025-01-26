@@ -17,7 +17,8 @@ class Player:
                 cooldown=1000,
                 fire_animation=[pygame.image.load(f'image/shotgun/fire_{i}.png').convert_alpha() for i in range(3)],
                 reload_animation=[pygame.image.load(f'image/shotgun/reload_{i}.png').convert_alpha() for i in range(3)],
-                idle_animation=[pygame.image.load('image/shotgun/0.png').convert_alpha()]  # Нейтральный спрайт
+                idle_animation=[pygame.image.load('image/shotgun/0.png').convert_alpha()],
+                fire_sound=pygame.mixer.Sound(SOUNDS['shotgun'])  # Добавлен звук
             )
         }
         self.current_weapon = 'shotgun'
@@ -82,7 +83,6 @@ class Player:
             self.angle %= 2 * math.pi
 
     def check_collision(self, x, y):
-        # Проверка столкновений с объектами на карте
         for wall in self.walls:
             if wall.collidepoint(x, y):
                 return True

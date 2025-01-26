@@ -7,6 +7,10 @@ from map import walls
 from ray_casting import ray_casting
 from sprites import Sprites
 pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load(SOUNDS['background'])
+pygame.mixer.music.play(-1)  # -1 означает бесконечное повторение
+pygame.mixer.music.set_volume(0.3)
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 player = Player(walls)
@@ -20,7 +24,7 @@ while True:
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1 and player.mouse_locked:  # Проверка блокировки
+            if event.button == 1 and player.mouse_locked:
                 player.shoot()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -42,7 +46,7 @@ while True:
     for weapon in player.inventory.values():
         weapon.update_animation()
 
-    drawing.draw_weapon(player.inventory[player.current_weapon].get_current_frame())  # Отрисовка текущего кадра оружия
+    drawing.draw_weapon(player.inventory[player.current_weapon].get_current_frame())
 
     pygame.display.flip()
     clock.tick(MAX_FPS)
