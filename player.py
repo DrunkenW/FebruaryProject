@@ -77,13 +77,9 @@ class Player:
             x, y = pygame.mouse.get_pos()
             center_x, center_y = WIDTH // 2, HEIGHT // 2
             delta_x = x - center_x
-            if abs(delta_x) > 50:
-                delta_x = 0
             self.angle += delta_x * MOUSE_SENSITIVITY
             pygame.mouse.set_pos((center_x, center_y))
-
-            # Нормализация угла
-        self.angle %= 2 * math.pi
+            self.angle %= 2 * math.pi
 
     def check_collision(self, x, y):
         # Проверка столкновений с объектами на карте
