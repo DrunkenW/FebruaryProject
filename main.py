@@ -7,7 +7,7 @@ from map import walls
 pygame.init()
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
-player = Player(walls)  # Pass the walls list to the Player constructor
+player = Player(walls)
 drawing = Drawing(sc)
 pygame.mouse.set_visible(False)
 pygame.event.set_grab(True)
@@ -24,7 +24,6 @@ while True:
                 player.mouse_locked = not player.mouse_locked
                 pygame.mouse.set_visible(not player.mouse_locked)
                 pygame.event.set_grab(player.mouse_locked)
-                # При разблокировке верните курсор в центр
                 if player.mouse_locked:
                     pygame.mouse.set_pos((WIDTH // 2, HEIGHT // 2))
 

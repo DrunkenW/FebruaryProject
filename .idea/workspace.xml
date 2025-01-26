@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fde086fc-93a0-4861-85fe-81f803a1d66d" name="Changes" comment="исправил баг с поворотом мыши">
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="ray_casting" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DrunkenW&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DrunkenW/FebruaryProject.git&quot;,
+    &quot;accountId&quot;: &quot;f0b252fc-c843-4b71-9ca9-98c0c455e905&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2rFdec8kbspWfZ1yths4ypVXKHk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.draw.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ray_casting.executor&quot;: &quot;Run&quot;,
+    &quot;Python.settings.executor&quot;: &quot;Run&quot;,
+    &quot;Python.weapon.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Drunken/Downloads/Raycasting-3d-game-tutorial-master/Raycasting-3d-game-tutorial-master/part #2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Drunken\PycharmProjects\DOOM\image\shotgun" />
+      <recent name="C:\Users\Drunken\PycharmProjects\DOOM\image\reload_0" />
+      <recent name="C:\Users\Drunken\PycharmProjects\DOOM\image" />
+      <recent name="C:\Users\Drunken\PycharmProjects\DOOM\sprites\devil" />
+      <recent name="C:\Users\Drunken\PycharmProjects\DOOM" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PY-242.21829.153" />
+        <option value="bundled-python-sdk-464836ebc622-b74155a9e76b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.21829.153" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fde086fc-93a0-4861-85fe-81f803a1d66d" name="Changes" comment="" />
+      <created>1736158852982</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736158852982</updated>
+      <workItem from="1736158854014" duration="27000" />
+      <workItem from="1736158885522" duration="566000" />
+      <workItem from="1736160709655" duration="7112000" />
+      <workItem from="1736249644417" duration="10840000" />
+      <workItem from="1736334189315" duration="9422000" />
+      <workItem from="1736443368231" duration="1537000" />
+      <workItem from="1737449054680" duration="7287000" />
+      <workItem from="1737653971413" duration="5063000" />
+      <workItem from="1737821077411" duration="636000" />
+      <workItem from="1737873163176" duration="1326000" />
+    </task>
+    <task id="LOCAL-00001" summary="Довольно большой реворк файлов&#10;Изменение рейкаст-системы, оптимизация с помощью DDA алгоритма.&#10;mapping вынес в функцию&#10;Перенос draw метода в отдельный класс, файл.&#10;переделал карту&#10;ограничение 120 фпс из-за ограничений движка(скорость игрока при большом фпс увеличивается) &#10;добавил больше цветов в settings">
+      <option name="closed" value="true" />
+      <created>1736183094056</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736183094056</updated>
+    </task>
+    <task id="LOCAL-00002" summary="добавил в settings настройки текстур. добавил в проект текстуры.">
+      <option name="closed" value="true" />
+      <created>1736260070812</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1736260070812</updated>
+    </task>
+    <task id="LOCAL-00003" summary="координально изменил систему карты( добавил тип стен 1, 2)">
+      <option name="closed" value="true" />
+      <created>1736260923938</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1736260923938</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Вынес рейкаст-систему в отдельный файл для чистоты кода.">
+      <option name="closed" value="true" />
+      <created>1736261835311</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736261835311</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Добавил текстуры стен и неба&#10;вырезана коллизия(баги)&#10;ограничение фпс вырезано">
+      <option name="closed" value="true" />
+      <created>1736262044875</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1736262044875</updated>
+    </task>
+    <task id="LOCAL-00006" summary="фикс багов связанных с текстурами">
+      <option name="closed" value="true" />
+      <created>1736264257625</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1736264257625</updated>
+    </task>
+    <task id="LOCAL-00007" summary="исправил вылет игры при приближение к стене">
+      <option name="closed" value="true" />
+      <created>1736335115766</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1736335115766</updated>
+    </task>
+    <task id="LOCAL-00008" summary="фикс бага">
+      <option name="closed" value="true" />
+      <created>1736342104256</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1736342104256</updated>
+    </task>
+    <task id="LOCAL-00009" summary="добавил шаблон для HUD бара">
+      <option name="closed" value="true" />
+      <created>1736343767299</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1736343767299</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Добавил заготовку для HUD, не активна. оптимизация, фиксбагов&#10;Коллизия у стен">
+      <option name="closed" value="true" />
+      <created>1736347224744</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1736347224744</updated>
+    </task>
+    <task id="LOCAL-00011" summary="исправил баг с поворотом мыши">
+      <option name="closed" value="true" />
+      <created>1737873683662</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1737873683662</updated>
+    </task>
+    <task id="LOCAL-00012" summary="исправил баг с поворотом мыши">
+      <option name="closed" value="true" />
+      <created>1737873712972</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1737873712972</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="dev" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Довольно большой реворк файлов&#10;Изменение рейкаст-системы, оптимизация с помощью DDA алгоритма.&#10;mapping вынес в функцию&#10;Перенос draw метода в отдельный класс, файл.&#10;переделал карту&#10;ограничение 120 фпс из-за ограничений движка(скорость игрока при большом фпс увеличивается) &#10;добавил больше цветов в settings" />
+    <MESSAGE value="добавил в settings настройки текстур. добавил в проект текстуры." />
+    <MESSAGE value="координально изменил систему карты( добавил тип стен 1, 2)" />
+    <MESSAGE value="Вынес рейкаст-систему в отдельный файл для чистоты кода." />
+    <MESSAGE value="Добавил текстуры стен и неба&#10;вырезана коллизия(баги)&#10;ограничение фпс вырезано" />
+    <MESSAGE value="фикс багов связанных с текстурами" />
+    <MESSAGE value="исправил вылет игры при приближение к стене" />
+    <MESSAGE value="фикс бага" />
+    <MESSAGE value="добавил шаблон для HUD бара" />
+    <MESSAGE value="Добавил заготовку для HUD, не активна. оптимизация, фиксбагов&#10;Коллизия у стен" />
+    <MESSAGE value="исправил баг с поворотом мыши" />
+    <option name="LAST_COMMIT_MESSAGE" value="исправил баг с поворотом мыши" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/DOOM$weapon.coverage" NAME="weapon Coverage Results" MODIFIED="1737658329507" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DOOM$draw.coverage" NAME="draw Coverage Results" MODIFIED="1736165870273" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DOOM$settings.coverage" NAME="settings Coverage Results" MODIFIED="1736165900356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DOOM$main.coverage" NAME="main Coverage Results" MODIFIED="1737873831856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DOOM$ray_casting.coverage" NAME="ray_casting Coverage Results" MODIFIED="1736341600584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
