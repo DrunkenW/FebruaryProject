@@ -5,10 +5,33 @@ from settings import *
 class Sprites:
     def __init__(self):
         self.sprite_types = {
-            'devil': [pygame.image.load(f'sprites/devil/{i}.png').convert_alpha() for i in range(8)]
+            'devil': [pygame.image.load(f'sprites/devil/{i}.png').convert_alpha() for i in range(8)],
+            'torch': pygame.image.load("sprites/torch/0 (1).png"),
+            'barrel': pygame.image.load("sprites/barrel/0.png"),
+            'scream_torch': pygame.image.load("sprites/torch/1.png"),
+            'scream': pygame.image.load("sprites/scream/0.png")
         }
         self.list_of_objects = [
-            SpriteObject(self.sprite_types['devil'], False, (7, 4), -0.2, 0.7)
+            # Монстры (5 шт) - стратегические точки
+            SpriteObject(self.sprite_types['devil'], False, (4.5, 3.5), -0.2, 0.7),
+            SpriteObject(self.sprite_types['devil'], False, (16.5, 6.5), -0.2, 0.7),
+            SpriteObject(self.sprite_types['devil'], False, (10.5, 12.5), -0.2, 0.7),
+            SpriteObject(self.sprite_types['devil'], False, (22.5, 9.5), -0.2, 0.7),
+            SpriteObject(self.sprite_types['devil'], False, (7.5, 15.5), -0.2, 0.7),
+
+            # Факелы x2 (60 шт) - вдоль стен с отступом 0.1
+            *[SpriteObject(self.sprite_types['torch'], True, (x + 0.1, y + 0.1), 1.6, 0.4)
+              for x in range(1, 27, 3) for y in [1, 6, 9, 13]],  # Основные линии
+            *[SpriteObject(self.sprite_types['torch'], True, (x + 0.1, y + 0.1), 1.6, 0.4)
+              for x, y in [(3, 2), (8, 4), (14, 7), (19, 5), (24, 10), (10, 12), (17, 14)]],  # Дополнительные
+
+            # Бочки x2 (30 шт) - углы и тупики
+            *[SpriteObject(self.sprite_types['barrel'], True, (x + 0.9, y + 0.9), 1.8, 0.4)
+              for x, y in [(2, 3), (5, 3), (9, 3), (14, 3), (19, 3), (23, 3),
+                           (4, 5), (11, 5), (17, 5), (21, 5), (6, 7), (13, 7),
+                           (18, 7), (24, 7), (3, 8), (8, 8), (15, 8), (22, 8),
+                           (5, 10), (12, 10), (20, 10), (7, 11), (14, 11), (19, 11),
+                           (2, 13), (10, 13), (17, 13), (23, 13)]]
         ]
 
 

@@ -22,7 +22,7 @@ MAX_FPS = 100
 
 MOVE_SPEED = 1
 
-start_player_pos = (WIDTH // 3, HEIGHT // 3)
+start_player_pos = (WIDTH // 2, HEIGHT // 2)
 player_angle = 0
 player_speed = 2
 
