@@ -26,21 +26,21 @@ start_player_pos = (WIDTH // 2, HEIGHT // 2)
 player_angle = 0
 player_speed = 2
 
-WALL_SIZE = 100
+TILE = 100
 
 FOV = math.pi / 3  # угол обзора
 RAYS_INT = 320
 DRAWING_RANGE = 800  # дальность прорисовки
 DELTA_ANGLE = FOV / RAYS_INT  # углы между лучами
 DIST = RAYS_INT // (2 * math.tan(FOV / 2))
-PROJ_COEF = 3 * DIST * WALL_SIZE
+PROJ_COEF = 3 * DIST * TILE
 
 TurningSpeed = 0.015  # скорость поворота
 
 # texture настройки
 TEXTURE_WIDTH = 1200
 TEXTURE_HEIGHT = 1200
-TEXTURE_SCALE = TEXTURE_WIDTH // WALL_SIZE
+TEXTURE_SCALE = TEXTURE_WIDTH // TILE
 
 # sprites
 SPRITE_SIZE = 100
@@ -53,6 +53,7 @@ WEAPON_HEIGHT = 300
 DOUBLE_PI = math.pi * 2
 CENTER_RAY = RAYS_INT // 2 - 1
 FAKE_RAYS = 100
+FAKE_RAYS_RANGE = RAYS_INT - 1 + 2 * FAKE_RAYS
 HALF_FOV = FOV / 2
 SCALE = WIDTH // RAYS_INT
 

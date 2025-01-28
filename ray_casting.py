@@ -4,7 +4,7 @@ from map import world_map
 
 
 def mapping(a, b):
-    return (a // WALL_SIZE) * WALL_SIZE, (b // WALL_SIZE) * WALL_SIZE
+    return (a // TILE) * TILE, (b // TILE) * TILE
 
 
 def ray_casting(player, textures):
@@ -19,30 +19,30 @@ def ray_casting(player, textures):
         cos_a = cos_a if cos_a else 0.000001
 
         # verticals
-        x, dx = (xm + WALL_SIZE, 1) if cos_a >= 0 else (xm, -1)
-        for i in range(0, WIDTH, WALL_SIZE):
+        x, dx = (xm + TILE, 1) if cos_a >= 0 else (xm, -1)
+        for i in range(0, WIDTH, TILE):
             depth_v = (x - ox) / cos_a
             yv = oy + depth_v * sin_a
             tile_v = mapping(x + dx, yv)
             if tile_v in world_map:
                 texture_v = world_map[tile_v]
                 break
-            x += dx * WALL_SIZE
+            x += dx * TILE
 
         # horizontals
-        y, dy = (ym + WALL_SIZE, 1) if sin_a >= 0 else (ym, -1)
-        for i in range(0, HEIGHT, WALL_SIZE):
+        y, dy = (ym + TILE, 1) if sin_a >= 0 else (ym, -1)
+        for i in range(0, HEIGHT, TILE):
             depth_h = (y - oy) / sin_a
             xh = ox + depth_h * cos_a
             tile_h = mapping(xh, y + dy)
             if tile_h in world_map:
                 texture_h = world_map[tile_h]
                 break
-            y += dy * WALL_SIZE
+            y += dy * TILE
 
         # projection
         depth, offset, texture = (depth_v, yv, texture_v) if depth_v < depth_h else (depth_h, xh, texture_h)
-        offset = int(offset) % WALL_SIZE
+        offset = int(offset) % TILE
         depth *= math.cos(player.angle - cur_angle)
         depth = max(depth, 0.00001)
         proj_height = min(int(PROJ_COEF / depth), 2 * HEIGHT)

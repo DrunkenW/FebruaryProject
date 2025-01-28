@@ -25,8 +25,8 @@ walls = []
 for j, row in enumerate(text_map):
     for i, char in enumerate(row):
         if char != '.':
-            wall_pos = (i * WALL_SIZE, j * WALL_SIZE)
-            walls.append(pygame.Rect(wall_pos[0], wall_pos[1], WALL_SIZE, WALL_SIZE))
+            wall_pos = (i * TILE, j * TILE)
+            walls.append(pygame.Rect(wall_pos[0], wall_pos[1], TILE, TILE))
             if char == '1':
                 world_map[wall_pos] = '1'
             elif char == '2':
