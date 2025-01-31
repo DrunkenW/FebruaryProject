@@ -36,7 +36,9 @@ while True:
                 if player.mouse_locked:
                     pygame.mouse.set_pos((WIDTH // 2, HEIGHT // 2))
 
-
+    for obj in sprites.list_of_objects:
+        if obj.flag == 'npc':
+            obj.update_collision_rect()
     player.movement()
     sc.fill(BLACK)
 

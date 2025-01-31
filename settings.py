@@ -21,6 +21,9 @@ FPS = 165
 MAX_FPS = 100
 
 MOVE_SPEED = 1
+NPC_SPEED = 1.2
+NPC_FOV = math.pi/2  # Угол обзора NPC
+NPC_VIEW_DISTANCE = 800  # Дальность зрения
 
 start_player_pos = (WIDTH // 2, HEIGHT // 2)
 player_angle = 0

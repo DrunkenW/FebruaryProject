@@ -110,6 +110,13 @@ class SpriteObject:
         self.door_open_trigger = False
         self.door_prev_pos = self.y if self.flag == 'door_h' else self.x
         self.delete = False
+        self.distance_to_sprite = 0
+        self.collision_rect = pygame.Rect(
+            self.x - self.side // 2,
+            self.y - self.side // 2,
+            self.side,
+            self.side
+        )
         if self.viewing_angles:
             if len(self.object) == 8:
                 self.sprite_angles = [frozenset(range(338, 361)) | frozenset(range(0, 23))] + \
@@ -118,6 +125,13 @@ class SpriteObject:
                 self.sprite_angles = [frozenset(range(348, 361)) | frozenset(range(0, 11))] + \
                                      [frozenset(range(i, i + 23)) for i in range(11, 348, 23)]
             self.sprite_positions = {angle: pos for angle, pos in zip(self.sprite_angles, self.object)}
+
+    def object_locate(self, player):
+        dx, dy = self.x - player.x, self.y - player.y
+        self.distance_to_sprite = math.sqrt(dx ** 2 + dy ** 2)
+
+    def update_collision_rect(self):
+        self.collision_rect.center = (self.x, self.y)
 
     @property
     def is_on_fire(self):

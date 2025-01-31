@@ -4,7 +4,7 @@ from ray_casting import mapping
 import math
 import pygame
 from numba import njit
-
+NPC_SPEED = 1.5
 def ray_casting_npc_player(npc_x, npc_y, world_map, player_pos):
     ox, oy = player_pos
     xm, ym = mapping(ox, oy)
@@ -19,7 +19,8 @@ def ray_casting_npc_player(npc_x, npc_y, world_map, player_pos):
 
     # verticals
     x, dx = (xm + TILE, 1) if cos_a >= 0 else (xm, -1)
-    for i in range(0, int(abs(delta_x)) // TILE):
+    max_depth = delta_x if cos_a >= 0 else -delta_x
+    for i in range(0, int(max_depth) // TILE):
         depth_v = (x - ox) / cos_a
         yv = oy + depth_v * sin_a
         tile_v = mapping(x + dx, yv)
@@ -29,7 +30,8 @@ def ray_casting_npc_player(npc_x, npc_y, world_map, player_pos):
 
     # horizontals
     y, dy = (ym + TILE, 1) if sin_a >= 0 else (ym, -1)
-    for i in range(0, int(abs(delta_y)) // TILE):
+    max_depth = delta_y if sin_a >= 0 else -delta_y
+    for i in range(0, int(max_depth) // TILE):
         depth_h = (y - oy) / sin_a
         xh = ox + depth_h * cos_a
         tile_h = mapping(xh, y + dy)
@@ -58,11 +60,48 @@ class Interaction:
                     obj.npc_action_trigger = False
 
     def npc_move(self, obj):
-        if abs(obj.distance_to_sprite) > TILE:
-            dx = obj.x - self.player.pos[0]
-            dy = obj.y - self.player.pos[1]
-            obj.x = obj.x + 1 if dx < 0 else obj.x - 1
-            obj.y = obj.y + 1 if dy < 0 else obj.y - 1
+        if obj.distance_to_sprite > TILE:
+            dx = self.player.pos[0] - obj.x
+            dy = self.player.pos[1] - obj.y
+            angle = math.atan2(dy, dx)
+
+            # Рассчитываем шаг с учетом размера спрайта
+            step_x = math.cos(angle) * NPC_SPEED
+            step_y = math.sin(angle) * NPC_SPEED
+
+            # Проверяем коллизии для обеих осей отдельно
+            new_x = obj.x + step_x
+            new_y = obj.y + step_y
+
+            # Получаем все тайлы вокруг новой позиции
+            tiles_to_check = [
+                mapping(new_x - 20, new_y - 20),  # Левый верхний угол
+                mapping(new_x + 20, new_y - 20),  # Правый верхний
+                mapping(new_x - 20, new_y + 20),  # Левый нижний
+                mapping(new_x + 20, new_y + 20)  # Правый нижний
+            ]
+
+            # Проверяем все углы спрайта
+            if not any(tile in world_map for tile in tiles_to_check):
+                obj.x = new_x
+                obj.y = new_y
+            else:
+                # Пытаемся двигаться по осям отдельно
+                if not any(tile in world_map for tile in [
+                    mapping(new_x - 20, obj.y - 20),
+                    mapping(new_x + 20, obj.y - 20),
+                    mapping(new_x - 20, obj.y + 20),
+                    mapping(new_x + 20, obj.y + 20)
+                ]):
+                    obj.x = new_x
+
+                elif not any(tile in world_map for tile in [
+                    mapping(obj.x - 20, new_y - 20),
+                    mapping(obj.x + 20, new_y - 20),
+                    mapping(obj.x - 20, new_y + 20),
+                    mapping(obj.x + 20, new_y + 20)
+                ]):
+                    obj.y = new_y
 
     def clear_world(self):
         deleted_objects = self.sprites.list_of_objects[:]
