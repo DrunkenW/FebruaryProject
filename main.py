@@ -6,6 +6,7 @@ from draw import Drawing
 from map import walls
 from ray_casting import ray_casting
 from sprites import Sprites
+from interaction import *
 pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load(SOUNDS['background'])
@@ -16,6 +17,7 @@ clock = pygame.time.Clock()
 player = Player(walls)
 drawing = Drawing(sc)
 sprites = Sprites()
+interaction = Interaction(player, sprites, drawing)
 pygame.mouse.set_visible(False)
 pygame.event.set_grab(True)
 
@@ -37,6 +39,9 @@ while True:
 
     player.movement()
     sc.fill(BLACK)
+
+    interaction.npc_action()
+    interaction.clear_world()
 
     drawing.background(player.angle)
     walls = ray_casting(player, drawing.textures)
