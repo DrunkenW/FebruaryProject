@@ -1,3 +1,9 @@
+"""
+Этот модуль отвечает за трассировку лучей для отрисовки стен в игре.
+Ray casting используется для определения видимых стен и их текстур на основе позиции игрока и его угла обзора.
+Модуль также вычисляет глубину и проекцию стен для корректного отображения на экране.
+"""
+
 import pygame
 from settings import *
 from map import world_map
@@ -8,6 +14,12 @@ def mapping(a, b):
 
 
 def ray_casting(player, textures):
+    """
+    Основная функция ray casting, которая вычисляет видимые стены и их текстуры.
+    player: объект игрока, содержащий его позицию и угол обзора.
+    textures: словарь текстур стен.
+    Возвращает список стен с их глубиной, текстурой и позицией на экране.
+    """
     walls = []
     ox, oy = player.pos
     xm, ym = mapping(ox, oy)
@@ -18,7 +30,7 @@ def ray_casting(player, textures):
         sin_a = sin_a if sin_a else 0.000001
         cos_a = cos_a if cos_a else 0.000001
 
-        # verticals
+        # Проверка вертикальных стен
         x, dx = (xm + TILE, 1) if cos_a >= 0 else (xm, -1)
         for i in range(0, WIDTH, TILE):
             depth_v = (x - ox) / cos_a
@@ -29,7 +41,7 @@ def ray_casting(player, textures):
                 break
             x += dx * TILE
 
-        # horizontals
+        # Проверка горизонтальных стен
         y, dy = (ym + TILE, 1) if sin_a >= 0 else (ym, -1)
         for i in range(0, HEIGHT, TILE):
             depth_h = (y - oy) / sin_a
@@ -40,13 +52,14 @@ def ray_casting(player, textures):
                 break
             y += dy * TILE
 
-        # projection
+        # Проекция стен на экран
         depth, offset, texture = (depth_v, yv, texture_v) if depth_v < depth_h else (depth_h, xh, texture_h)
         offset = int(offset) % TILE
         depth *= math.cos(player.angle - cur_angle)
         depth = max(depth, 0.00001)
         proj_height = min(int(PROJ_COEF / depth), 2 * HEIGHT)
 
+        # Подготовка текстуры стены для отрисовки
         wall_column = textures[texture].subsurface(offset * TEXTURE_SCALE, 0, TEXTURE_SCALE, TEXTURE_HEIGHT)
         wall_column = pygame.transform.scale(wall_column, (SCALE, proj_height))
         wall_pos = (ray * SCALE, HEIGHT // 2 - proj_height // 2)

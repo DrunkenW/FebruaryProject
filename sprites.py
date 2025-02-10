@@ -1,10 +1,14 @@
+"""Этот модуль отвечает за управление спрайтами в игре, включая их анимацию, позиционирование и взаимодействие с игроком.
+Класс Sprites содержит параметры и список объектов (спрайтов), которые размещаются на карте.
+Класс SpriteObject управляет отдельными спрайтами, их анимацией, коллизиями и отображением на экране."""
+
 import pygame
 from settings import *
 from collections import deque
 
-
 class Sprites:
     def __init__(self):
+        # Параметры для каждого типа спрайта
         self.sprite_parameters = {
             'barrel': {
                 'sprite': pygame.image.load('sprites/barrel/base/0.png').convert_alpha(),
@@ -12,8 +16,7 @@ class Sprites:
                 'shift': 1.8,
                 'scale': (0.4, 0.4),
                 'side': 30,
-                'animation': deque(
-                    [pygame.image.load(f'sprites/barrel/anim/{i}.png').convert_alpha() for i in range(12)]),
+                'animation': deque([pygame.image.load(f'sprites/barrel/anim/{i}.png').convert_alpha() for i in range(12)]),
                 'is_dead': None,
                 'dead_shift': 2.6,
                 'animation_dist': 800,
@@ -35,10 +38,10 @@ class Sprites:
                 'animation_speed': 10,
                 'blocked': True,
                 'flag': 'npc',
-                'obj_action': deque(
-                    [pygame.image.load(f'sprites/devil/anim/{i}.png').convert_alpha() for i in range(9)]), }
+                'obj_action': deque([pygame.image.load(f'sprites/devil/anim/{i}.png').convert_alpha() for i in range(9)]),
+            }
         }
-
+        # Список объектов на карте
         self.list_of_objects = [
             # Монстры (5 шт) - стратегические точки
             SpriteObject(self.sprite_parameters['devil'], (4.5, 3.5)),
@@ -46,8 +49,6 @@ class Sprites:
             SpriteObject(self.sprite_parameters['devil'], (10.5, 12.5)),
             SpriteObject(self.sprite_parameters['devil'], (22.5, 9.5)),
             SpriteObject(self.sprite_parameters['devil'], (7.5, 15.5)),
-
-            # Факелы x2 (60 шт) - вдоль стен с отступом 0.1
             # Бочки x2 (30 шт) - углы и тупики
             SpriteObject(self.sprite_parameters['barrel'], (2 + 0.9, 3 + 0.9)),
             SpriteObject(self.sprite_parameters['barrel'], (5 + 0.9, 3 + 0.9)),
@@ -78,25 +79,17 @@ class Sprites:
             SpriteObject(self.sprite_parameters['barrel'], (17 + 0.9, 13 + 0.9)),
             SpriteObject(self.sprite_parameters['barrel'], (23 + 0.9, 13 + 0.9)),
         ]
-        """
-            *[SpriteObject(self.sprite_parameters['torch'], True, (x + 0.1, y + 0.1), 1.6, 0.4)
-              for x in range(1, 27, 3) for y in [1, 6, 9, 13]],  # Основные линии
-            *[SpriteObject(self.sprite_parameters['torch'], True, (x + 0.1, y + 0.1), 1.6, 0.4)
-              for x, y in [(3, 2), (8, 4), (14, 7), (19, 5), (24, 10), (10, 12), (17, 14)]],  # Дополнительные
-            """
-
 
 class SpriteObject:
     def __init__(self, parameters, pos):
+        # Инициализация спрайта с заданными параметрами
         self.object = parameters['sprite'].copy()
         self.viewing_angles = parameters['viewing_angles']
         self.shift = parameters['shift']
         self.scale = parameters['scale']
         self.animation = parameters['animation'].copy()
-        # ---------------------
         self.is_dead = parameters['is_dead']
         self.dead_shift = parameters['dead_shift']
-        # ---------------------
         self.animation_dist = parameters['animation_dist']
         self.animation_speed = parameters['animation_speed']
         self.blocked = parameters['blocked']
@@ -127,24 +120,28 @@ class SpriteObject:
             self.sprite_positions = {angle: pos for angle, pos in zip(self.sprite_angles, self.object)}
 
     def object_locate(self, player):
+        # Определение позиции спрайта относительно игрока
         dx, dy = self.x - player.x, self.y - player.y
         self.distance_to_sprite = math.sqrt(dx ** 2 + dy ** 2)
 
     def update_collision_rect(self):
+        # Обновление прямоугольника коллизии
         self.collision_rect.center = (self.x, self.y)
 
     @property
     def is_on_fire(self):
+        # Проверка, находится ли спрайт в поле зрения игрока
         if CENTER_RAY - self.side // 2 < self.current_ray < CENTER_RAY + self.side // 2 and self.blocked:
             return self.distance_to_sprite, self.proj_height
         return float('inf'), None
 
     @property
     def pos(self):
+        # Возвращает позицию спрайта
         return self.x - self.side // 2, self.y - self.side // 2
 
     def object_locate(self, player):
-
+        # Логика определения позиции и отображения спрайта относительно игрока
         dx, dy = self.x - player.x, self.y - player.y
         self.distance_to_sprite = math.sqrt(dx ** 2 + dy ** 2)
 
@@ -169,8 +166,7 @@ class SpriteObject:
             half_sprite_height = sprite_height // 2
             shift = half_sprite_height * self.shift
 
-            # logic for doors, npc, decor
-
+            # Логика для NPC и декораций
             if self.is_dead and self.is_dead != 'immortal':
                 sprite_object = self.dead_animation()
                 shift = half_sprite_height * self.dead_shift
@@ -181,16 +177,15 @@ class SpriteObject:
                 self.object = self.visible_sprite()
                 sprite_object = self.sprite_animation()
 
-            # sprite scale and pos
+            # Масштабирование и позиционирование спрайта
             sprite_pos = (self.current_ray * SCALE - half_sprite_width, HEIGHT / 2 - half_sprite_height + shift)
             sprite = pygame.transform.scale(sprite_object, (sprite_width, sprite_height))
             return (self.distance_to_sprite, sprite, sprite_pos)
-
         else:
             return (False,)
 
-
     def sprite_animation(self):
+        # Анимация спрайта
         if self.animation and self.distance_to_sprite < self.animation_dist:
             sprite_object = self.animation[0]
             if self.animation_count < self.animation_speed:
@@ -201,8 +196,8 @@ class SpriteObject:
             return sprite_object
         return self.object
 
-
     def visible_sprite(self):
+        # Определение видимого спрайта в зависимости от угла обзора
         if self.viewing_angles:
             if self.theta < 0:
                 self.theta += DOUBLE_PI
@@ -213,8 +208,8 @@ class SpriteObject:
                     return self.sprite_positions[angles]
         return self.object
 
-
     def npc_in_action(self):
+        # Анимация NPC в действии
         sprite_object = self.obj_action[0]
         if self.animation_count < self.animation_speed:
             self.animation_count += 1

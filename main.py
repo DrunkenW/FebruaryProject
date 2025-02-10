@@ -7,12 +7,16 @@ from map import walls
 from ray_casting import ray_casting
 from sprites import Sprites
 from interaction import *
+
 pygame.init()
+# Музыка
 pygame.mixer.init()
 pygame.mixer.music.load(SOUNDS['background'])
 pygame.mixer.music.play(-1)  # -1 означает бесконечное повторение
 pygame.mixer.music.set_volume(0.3)
+
 sc = pygame.display.set_mode((WIDTH, HEIGHT))
+# создание объектов
 clock = pygame.time.Clock()
 player = Player(walls)
 drawing = Drawing(sc)
@@ -26,9 +30,11 @@ while True:
         if event.type == pygame.QUIT:
             exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
+            # стрельба
             if event.button == 1 and player.mouse_locked:
                 player.shoot()
         if event.type == pygame.KEYDOWN:
+            # ходьба и поворот камеры
             if event.key == pygame.K_ESCAPE:
                 player.mouse_locked = not player.mouse_locked
                 pygame.mouse.set_visible(not player.mouse_locked)
@@ -36,10 +42,13 @@ while True:
                 if player.mouse_locked:
                     pygame.mouse.set_pos((WIDTH // 2, HEIGHT // 2))
 
+    # Отрисовка нпс
     for obj in sprites.list_of_objects:
         if obj.flag == 'npc':
             obj.update_collision_rect()
     player.movement()
+
+    # отрисовка мира
     sc.fill(BLACK)
 
     interaction.npc_action()
